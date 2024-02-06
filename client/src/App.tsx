@@ -8,6 +8,7 @@ import LoginPage from "./Pages/AdminPages/LoginPage.tsx";
 import DashboardPage from "./Pages/AdminPages/DashboardPage.tsx";
 import ErrorPage from "./Pages/ErrorPage.tsx";
 import Create from "./Pages/AdminPages/Create.tsx";
+import HomePage from "./Pages/ClientPages/HomePage.tsx";
 
 type Route = {
   to: string;
@@ -31,7 +32,12 @@ const adminRoutes: Route[] = [
 ];
 
 //client routes
-const clientRoutes: Route[] = [];
+const clientRoutes: Route[] = [
+  {
+    to: "/",
+    element: <HomePage />,
+  },
+];
 
 export default function App() {
   return (
