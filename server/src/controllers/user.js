@@ -18,10 +18,19 @@ const { comparePasswords, hashPassword } = require("../utils/auth");
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const acc = await Admin.findOne({ email: email });
 
-    if (!acc)
+    if (!email) {
+      return res.status(400).json({ error: "Nie podano adresu email" });
+    }
+
+    if (!password) {
+      return res.status(400).json({ error: "Nie podano hasła" });
+    }
+
+    const acc = await Admin.findOne({ email: email });
+    if (!acc) {
       return res.status(401).json({ error: "Niewłaściwy login lub hasło" });
+    }
 
     const isMatch = await comparePasswords(password, acc.password);
     if (isMatch) {
@@ -39,7 +48,7 @@ const login = async (req, res) => {
               sameSite: false,
             })
             .status(200)
-            .json(acc);
+            .json({ admin: acc.email });
         }
       );
     } else {
@@ -53,7 +62,10 @@ const login = async (req, res) => {
 
 const logout = (req, res) => {
   try {
-    res.clearCookie("token").status(200).json({ message: "Wylogowano" });
+    res
+      .clearCookie("token")
+      .status(200)
+      .json({ admin: null, message: "Wylogowano" });
   } catch (error) {
     console.log(error);
     res.json({ error: error.message });

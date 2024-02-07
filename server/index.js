@@ -1,19 +1,10 @@
-const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const app = express();
+const createServer = require("./src/utils/server");
 dotenv.config();
 
+const app = createServer();
 const port = process.env.PORT || 3000;
-//middleware
-app.use(cookieParser());
-app.use(express.json());
-app.use(cors());
-
-app.use("/api/", require("./src/routes/user"));
-app.use("/api/posts", require("./src/routes/posts"));
 
 mongoose
   .connect(process.env.MONGO_URI)
