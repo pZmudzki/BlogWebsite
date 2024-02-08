@@ -19,11 +19,11 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email) {
+    if (email === "") {
       return res.status(400).json({ error: "Nie podano adresu email" });
     }
 
-    if (!password) {
+    if (password === "") {
       return res.status(400).json({ error: "Nie podano hasła" });
     }
 
@@ -48,7 +48,7 @@ const login = async (req, res) => {
               sameSite: false,
             })
             .status(200)
-            .json({ admin: acc.email });
+            .json(acc.email);
         }
       );
     } else {

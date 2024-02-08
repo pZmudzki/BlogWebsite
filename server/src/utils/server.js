@@ -8,7 +8,12 @@ function createServer() {
   //middleware
   app.use(cookieParser());
   app.use(express.json());
-  app.use(cors());
+  app.use(
+    cors({
+      credentials: true,
+      origin: "http://localhost:5173",
+    })
+  );
 
   app.use("/api", require("../routes/user"));
   app.use("/api/posts", require("../routes/posts"));
