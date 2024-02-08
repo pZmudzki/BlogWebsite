@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminRoutes from "./Routes/AdminLayout.tsx";
 import ClientRoutes from "./Routes/ClientLayout.tsx";
@@ -18,15 +19,11 @@ type Route = {
 //admin routes
 const adminRoutes: Route[] = [
   {
-    to: "/admin",
-    element: <LoginPage />,
-  },
-  {
-    to: "/admin/dashboard",
+    to: "/dashboard",
     element: <DashboardPage />,
   },
   {
-    to: "/admin/dashboard/create",
+    to: "/dashboard/create",
     element: <Create />,
   },
 ];
@@ -37,7 +34,15 @@ const clientRoutes: Route[] = [
     to: "/",
     element: <HomePage />,
   },
+  {
+    to: "/admin",
+    element: <LoginPage />,
+  },
 ];
+
+//axios config
+axios.defaults.baseURL = "http://localhost:3000/api";
+axios.defaults.withCredentials = true;
 
 export default function App() {
   return (
