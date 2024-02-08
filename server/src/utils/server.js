@@ -13,10 +13,6 @@ function createServer() {
   app.use("/api", require("../routes/user"));
   app.use("/api/posts", require("../routes/posts"));
 
-  app.get("/api/test", async (req, res) => {
-    res.json({ message: "pass!" });
-  });
-
   return app;
 }
 
