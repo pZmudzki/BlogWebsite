@@ -29,14 +29,14 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     isLoggedIn();
-  }, []);
+  }, [admin]);
 
   function login(email: string) {
     setAdmin(email);
   }
 
   function logout() {
-    setAdmin(null);
+    setAdmin(false);
   }
 
   const ctxValues = { login, logout, admin };

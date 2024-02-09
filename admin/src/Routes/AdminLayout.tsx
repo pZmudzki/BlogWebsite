@@ -9,7 +9,7 @@ export default function AdminRoutes() {
 
   useEffect(() => {
     if (!admin) navigate("/", { replace: true });
-  }, []);
+  }, [admin]);
 
   return (
     <div className="h-screen flex bg-black text-white p-3">
