@@ -65,7 +65,7 @@ const logout = (req, res) => {
     res
       .clearCookie("token")
       .status(200)
-      .json({ admin: null, message: "Wylogowano" });
+      .json({ message: "Pomyślnie wylogowano z twojego konta" });
   } catch (error) {
     console.log(error);
     res.json({ error: error.message });
