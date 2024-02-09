@@ -71,8 +71,28 @@ const logout = (req, res) => {
     res.json({ error: error.message });
   }
 };
+
+const checkAuth = (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (token === undefined) {
+      return res.status(200).json({ admin: false });
+    }
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res.status(200).json({ admin: false });
+      }
+      res.status(200).json({ admin: decoded.email });
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ error: error.message });
+  }
+};
+
 module.exports = {
   login,
   logout,
+  checkAuth,
   // register,
 };

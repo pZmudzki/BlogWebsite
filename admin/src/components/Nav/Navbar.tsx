@@ -1,6 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-
+import { HomeIcon } from "@heroicons/react/24/solid";
 type Link = {
   to: string;
   title: string;
@@ -8,11 +7,11 @@ type Link = {
 
 const navLinks: Link[] = [
   {
-    to: "/admin/dashboard",
-    title: "Dashboard",
+    to: "/dashboard",
+    title: "Home",
   },
   {
-    to: "/admin/dashboard/create",
+    to: "/dashboard/create",
     title: "Create new post",
   },
 ];
@@ -20,13 +19,13 @@ const navLinks: Link[] = [
 export default function Navbar() {
   const location = useLocation();
 
-  if (location.pathname === "/admin") return;
+  if (location.pathname === "/") return;
 
   return (
-    <nav className="flex flex-col">
+    <nav className="flex flex-col border border-gray-900 rounded-xl p-2">
       {navLinks.map((link) => (
         <NavLink key={link.title} to={link.to}>
-          <Button>{link.title}</Button>
+          <HomeIcon />
         </NavLink>
       ))}
     </nav>

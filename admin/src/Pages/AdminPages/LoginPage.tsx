@@ -13,6 +13,8 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/auth";
+import { useToast } from "@/components/ui/use-toast";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -21,7 +23,12 @@ const formSchema = z.object({
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, admin } = useAuth();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (admin) navigate("/dashboard");
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,8 +43,20 @@ export default function LoginPage() {
       const { data } = await axios.post<string>("/login", formData);
       login(data);
       navigate("/dashboard");
-    } catch (error: any) {
-      console.log(error);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast({
+          variant: "destructive",
+          title: "Błąd",
+          description: error.response?.data.error,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Błąd",
+          description: "Wystąpił niespodziewany błąd",
+        });
+      }
     }
   }
 
