@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../store/auth";
+import { useAuth } from "../store/authContext";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect } from "react";
 

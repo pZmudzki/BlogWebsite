@@ -67,8 +67,8 @@ export default function Navbar() {
     <nav>
       <ul className="h-full flex flex-col border border-gray-900 rounded-xl p-3 gap-3">
         {navLinks.map((link) => (
-          <li className="last:mt-auto">
-            <TooltipProvider key={link.title}>
+          <li className="last:mt-auto" key={link.title}>
+            <TooltipProvider>
               <Tooltip delayDuration={200}>
                 <TooltipTrigger asChild>
                   <NavLink to={link.to}>{link.icon}</NavLink>
