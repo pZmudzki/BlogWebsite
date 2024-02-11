@@ -28,8 +28,11 @@ const formSchema = z.object({
   type: z.string({ required_error: "Wybierz typ posta" }),
   title: z.string({ required_error: "Tytuł jest wymagany" }),
   content: z.string({ required_error: "Treść postu jest wymagana" }),
-  img: z.instanceof(File),
-  // videoUrl: z.string(),
+  img: z.instanceof(FileList).optional(),
+  videoUrl: z
+    .string()
+    .url({ message: "Podany adres jest niewłaściwy" })
+    .optional(),
 });
 
 export default function CreatePostPage() {
@@ -39,13 +42,18 @@ export default function CreatePostPage() {
     resolver: zodResolver(formSchema),
   });
 
+  const imgRef = form.register("img");
+
   function onSubmit(formData: z.infer<typeof formSchema>) {
     console.log(formData);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-3"
+      >
         <FormField
           control={form.control}
           name="type"
@@ -113,22 +121,41 @@ export default function CreatePostPage() {
         <FormField
           control={form.control}
           name="img"
-          render={({ field }: { field: any }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Zdjęcia</FormLabel>
               <FormControl>
                 <Input
                   type="file"
-                  value={field.value ?? null}
-                  {...field}
-                  hidden
+                  accept="image/png, image/jpeg"
+                  multiple
+                  {...imgRef}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Utwórz</Button>
+        <FormField
+          control={form.control}
+          name="videoUrl"
+          render={({ field }: { field: any }) => (
+            <FormItem>
+              <FormLabel>Wideo</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Link do filmiku"
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex justify-end">
+          <Button type="submit">Utwórz</Button>
+        </div>
       </form>
     </Form>
   );

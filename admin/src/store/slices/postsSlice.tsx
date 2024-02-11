@@ -9,7 +9,7 @@ type Post = {
     | "Taniec";
   title: string;
   content: string;
-  imgUrl?: string;
+  imgUrl?: string[];
   videoUrl?: string;
   createdAt: Date;
   views: number;
