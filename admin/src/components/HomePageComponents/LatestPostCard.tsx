@@ -22,7 +22,7 @@ const post = {
 
 export default function LatestPostCard() {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle>Post</CardTitle>
         <CardDescription>Najnowszy post</CardDescription>
@@ -34,13 +34,7 @@ export default function LatestPostCard() {
             <p>{post.createdAt}</p>
           </div>
           <p className="text-2xl">{post.content}</p>
-          <div className="flex justify-between">
-            <img
-              className=" max-h-[500px]	"
-              src="https://monalizabezramy.com/wp-content/uploads/elementor/thumbs/wiersze1-p6kpbup0b6vwyv9fea9nspz2fpu0eu07mmspi81t0o.jpg"
-            />
-            <p className="ml-auto">Wyświetlenia: {post.views.toString()}</p>
-          </div>
+          <p className="ml-auto">Wyświetlenia: {post.views.toString()}</p>
         </div>
       </CardContent>
       <CardFooter>
