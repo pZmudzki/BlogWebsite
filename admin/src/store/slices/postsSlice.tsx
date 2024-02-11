@@ -2,6 +2,11 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 type Post = {
   id: string;
+  type:
+    | "Wierszem pisane"
+    | "Scenariuse pisane życiem"
+    | "Z medycznego punktu widzenia"
+    | "Taniec";
   title: string;
   content: string;
   imgUrl?: string;

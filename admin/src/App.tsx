@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AdminRoutes from "./Routes/AdminLayout.tsx";
+import ProtectedRoutes from "./Routes/ProtectedLayout.tsx";
 
 import LoginPage from "./Pages/LoginPage.tsx";
 import DashboardPage from "./Pages/DashboardPage.tsx";
@@ -8,6 +8,8 @@ import ErrorPage from "./Pages/ErrorPage.tsx";
 import PostsPage from "./Pages/PostsPage.tsx";
 import CommentsPage from "./Pages/CommentsPage.tsx";
 import AnaliticsPage from "./Pages/AnaliticsPage.tsx";
+import CreatePostPage from "./Pages/CreatePostPage.tsx";
+import PostsLayout from "./Routes/PostsLayout.tsx";
 
 //axios config
 axios.defaults.baseURL = "http://localhost:3000/api";
@@ -20,11 +22,14 @@ export default function App() {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<LoginPage />} />
         {/* Protected Routes */}
-        <Route element={<AdminRoutes />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/dashboard/posts" element={<PostsPage />} />
-          <Route path="/dashboard/comments" element={<CommentsPage />} />
-          <Route path="/dashboard/analitics" element={<AnaliticsPage />} />
+        <Route path="dashboard" element={<ProtectedRoutes />}>
+          <Route path="" element={<DashboardPage />} />
+          <Route path="posts" element={<PostsLayout />}>
+            <Route path="" element={<PostsPage />} />
+            <Route path="create" element={<CreatePostPage />} />
+          </Route>
+          <Route path="comments" element={<CommentsPage />} />
+          <Route path="analitics" element={<AnaliticsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
