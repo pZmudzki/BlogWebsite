@@ -1,5 +1,4 @@
-import { NavLink } from "react-router-dom";
-import { Button } from "../ui/button";
+import { Link, useLocation } from "react-router-dom";
 
 type PostsLink = {
   to: string;
@@ -8,25 +7,31 @@ type PostsLink = {
 
 const postsNavLinks: PostsLink[] = [
   {
+    to: "/dashboard/posts",
+    title: "Zarządzaj postami",
+  },
+  {
     to: "/dashboard/posts/create",
     title: "Nowy post",
   },
 ];
 
 export default function PostsNavBar() {
+  const location = useLocation();
+
   return (
     <ul className="flex gap-3 justify-end">
       {postsNavLinks.map((link) => {
         return (
-          <li key={link.to}>
-            <Button>
-              <NavLink
-                to={link.to}
-                className={({ isActive }) => (isActive ? "opacity-70" : "")}
-              >
-                {link.title}
-              </NavLink>
-            </Button>
+          <li
+            key={link.to}
+            className={`px-4 py-2 rounded-xl ${
+              location.pathname === link.to
+                ? "bg-gray-900 text-white"
+                : "bg-gray-200 text-black"
+            }`}
+          >
+            <Link to={link.to}>{link.title}</Link>
           </li>
         );
       })}

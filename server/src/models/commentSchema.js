@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const commentSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -18,6 +22,10 @@ const commentSchema = new mongoose.Schema({
     default: new Date(),
   },
   read: {
+    type: Boolean,
+    default: false,
+  },
+  accepted: {
     type: Boolean,
     default: false,
   },

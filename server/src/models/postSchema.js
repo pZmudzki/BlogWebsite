@@ -22,6 +22,14 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  views: {
+    type: Number,
+    default: 0,
+  },
+  archived: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = new mongoose.model("Post", postSchema);
