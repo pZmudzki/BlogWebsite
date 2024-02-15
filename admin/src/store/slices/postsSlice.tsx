@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-type Post = {
+export type Post = {
   id: string;
   type:
     | "Wierszem pisane"
@@ -50,3 +50,4 @@ export const postsSlice = createSlice({
 });
 
 export const { setPosts, addPost, updatePost, deletePost } = postsSlice.actions;
+export default postsSlice.reducer;

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
@@ -20,9 +21,12 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import { useToast } from "@/components/ui/use-toast";
-import { Textarea } from "@/components/ui/textarea";
+import axios, { isAxiosError } from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import parseImages from "../lib/parseImages";
+import { addPost, type Post } from "../store/slices/postsSlice";
+import { type AppDispatch, type RootState } from "@/store/store";
 
 const formSchema = z.object({
   type: z.string({ required_error: "Wybierz typ posta" }),
@@ -36,17 +40,52 @@ const formSchema = z.object({
 });
 
 export default function CreatePostPage() {
+  const dispatch = useDispatch<AppDispatch>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [images, setImages] = useState<string[]>([]);
   const { toast } = useToast();
+
+  const posts = useSelector((state: RootState) => state.posts.posts);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
-  const imgRef = form.register("img");
-
-  function onSubmit(formData: z.infer<typeof formSchema>) {
-    console.log(formData);
+  function handleImages(
+    e: Event & { currentTarget: EventTarget & HTMLInputElement }
+  ) {
+    const images: FileList = e.target.files;
+    const parsedImages = parseImages(images);
+    setImages(parsedImages);
   }
+
+  async function onSubmit(formData: z.infer<typeof formSchema>) {
+    formData.img = images;
+    try {
+      setIsLoading(true);
+      const { data } = await axios.post("/posts", formData);
+      if (data.error) {
+        toast({
+          variant: "destructive",
+          title: "Błąd",
+          description: data.error,
+        });
+        setIsLoading(false);
+      } else {
+        dispatch(addPost(data.post));
+        toast({
+          title: "Dodano post",
+          description: data.message,
+        });
+        setIsLoading(false);
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log(error.message);
+      }
+    }
+  }
+  console.log(posts);
 
   return (
     <Form {...form}>
@@ -128,8 +167,10 @@ export default function CreatePostPage() {
                 <Input
                   type="file"
                   accept="image/png, image/jpeg"
+                  name="img"
                   multiple
-                  {...imgRef}
+                  onChange={handleImages}
+                  // {...imgRef}
                 />
               </FormControl>
               <FormMessage />
@@ -154,7 +195,7 @@ export default function CreatePostPage() {
           )}
         />
         <div className="flex justify-end">
-          <Button type="submit">Utwórz</Button>
+          <Button type="submit">{isLoading ? "Ładowanie..." : "Utwórz"}</Button>
         </div>
       </form>
     </Form>

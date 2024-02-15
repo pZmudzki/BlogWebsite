@@ -23,15 +23,17 @@ export default function PostsNavBar() {
     <ul className="flex gap-3 justify-end">
       {postsNavLinks.map((link) => {
         return (
-          <li
-            key={link.to}
-            className={`px-4 py-2 rounded-xl ${
-              location.pathname === link.to
-                ? "bg-gray-900 text-white"
-                : "bg-gray-200 text-black"
-            }`}
-          >
-            <Link to={link.to}>{link.title}</Link>
+          <li key={link.to}>
+            <Link
+              to={link.to}
+              className={`px-4 py-2 rounded-xl ${
+                location.pathname === link.to
+                  ? "bg-gray-900 text-white"
+                  : "bg-gray-200 text-black"
+              }`}
+            >
+              {link.title}
+            </Link>
           </li>
         );
       })}
