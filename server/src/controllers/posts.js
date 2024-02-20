@@ -32,6 +32,17 @@ const addPost = async (req, res) => {
   }
 };
 
+const getLatestPost = async (req, res) => {
+  try {
+    const posts = await Post.find().sort({ createdAt: -1 }).limit(1);
+    console.log(posts);
+    res.status(200).json(posts[0]);
+  } catch (error) {
+    console.log(error.message);
+    res.status(404).json({ error: "Błąd w pobieraniu treści" });
+  }
+};
+
 const getPost = async (req, res) => {
   try {
     const { id } = req.query;
@@ -54,4 +65,4 @@ const getPosts = async (req, res) => {
   }
 };
 
-module.exports = { getPost, getPosts, addPost };
+module.exports = { getPost, getPosts, addPost, getLatestPost };
