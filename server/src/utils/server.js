@@ -17,6 +17,7 @@ function createServer() {
 
   app.use("/api", require("../routes/user"));
   app.use("/api/posts", require("../routes/posts"));
+  app.use("/api/comments", require("../routes/comments"));
 
   return app;
 }
