@@ -1,4 +1,4 @@
-const Comment = require("../models/Comment");
+const Comment = require("../models/commentSchema");
 
 const addComment = async (req, res) => {
   try {
@@ -12,4 +12,15 @@ const addComment = async (req, res) => {
   }
 };
 
-module.exports = { addComment };
+const getComments = async (req, res) => {
+  try {
+    const { postId } = req.query;
+    const comments = await Comment.find({ postId: postId });
+    res.status(200).json(comments);
+  } catch (error) {
+    console.log(error.message);
+    res.status(404).json({ error: "Błąd w pobieraniu komentarzy" });
+  }
+};
+
+module.exports = { addComment, getComments };
