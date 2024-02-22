@@ -29,7 +29,15 @@ export const postsSlice = createSlice({
   initialState,
   reducers: {
     setPosts(state, action: PayloadAction<Post[]>) {
-      state.posts.concat(action.payload);
+      const ids: String[] = [];
+      state.posts.map((statePost) => {
+        ids.push(statePost.id);
+      });
+      action.payload.map((post) => {
+        if (!ids.includes(post.id)) {
+          state.posts.push(post);
+        }
+      });
     },
     addPost(state, action: PayloadAction<Post>) {
       state.posts.push(action.payload);

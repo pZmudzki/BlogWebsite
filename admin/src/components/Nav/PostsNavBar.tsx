@@ -1,4 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
+import { Input } from "../ui/input";
+import { useDispatch } from "react-redux";
+import { setInput } from "../../store/slices/searchSlice";
+import { ChangeEvent } from "react";
 
 type PostsLink = {
   to: string;
@@ -18,13 +22,25 @@ const postsNavLinks: PostsLink[] = [
 
 export default function PostsNavBar() {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+    dispatch(setInput(e.target.value));
+  }
 
   return (
-    <ul className="flex gap-3 justify-end">
-      {postsNavLinks.map((link) => {
-        return (
-          <li key={link.to}>
+    <div className="flex justify-between items-center">
+      <Input
+        className="max-w-fit"
+        placeholder="Wyszukaj post"
+        name="search"
+        onChange={handleSearch}
+      />
+      <div className="flex gap-3 justify-end">
+        {postsNavLinks.map((link) => {
+          return (
             <Link
+              key={link.to}
               to={link.to}
               className={`px-4 py-2 rounded-xl ${
                 location.pathname === link.to
@@ -34,9 +50,9 @@ export default function PostsNavBar() {
             >
               {link.title}
             </Link>
-          </li>
-        );
-      })}
-    </ul>
+          );
+        })}
+      </div>
+    </div>
   );
 }
