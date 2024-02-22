@@ -5,7 +5,7 @@ const auth = require("../middlewares/auth");
 const { getPost, getPosts, addPost } = require("../controllers/posts");
 
 router.post("", auth, addPost);
-router.get("/:id", getPost);
+router.get("/post/:id", getPost);
 router.get("/:type", getPosts);
 
 module.exports = router;

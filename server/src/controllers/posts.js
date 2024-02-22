@@ -64,7 +64,12 @@ const getPost = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     const { type } = req.params;
-    const posts = await Post.find({ type: type });
+    let posts;
+    if (type === "all") {
+      posts = await Post.find();
+      return res.status(200).json(posts);
+    }
+    posts = await Post.find({ type: type });
     res.status(200).json(posts);
   } catch (error) {
     console.log(error.message);

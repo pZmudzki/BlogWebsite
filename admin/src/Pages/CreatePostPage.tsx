@@ -80,7 +80,7 @@ export default function CreatePostPage() {
         setIsLoading(false);
       }
     } catch (error) {
-      if (isAxiosError(error)) {
+      if (axios.isAxiosError(error)) {
         console.log(error.message);
       }
     }

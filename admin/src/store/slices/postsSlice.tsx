@@ -16,7 +16,7 @@ export type Post = {
   archived: boolean;
 };
 
-type PostsState = {
+export type PostsState = {
   posts: Post[];
 };
 
