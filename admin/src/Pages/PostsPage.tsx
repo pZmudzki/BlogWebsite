@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { setPosts, type Post } from "@/store/slices/postsSlice";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
+import PostCard from "@/components/MenagePostsComponents/PostCard";
 
 export default function PostsPage() {
   const dispatch = useDispatch();
@@ -51,11 +52,9 @@ export default function PostsPage() {
   }
 
   return (
-    <div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       {posts.map((post) => (
-        <div key={post.title}>
-          <span>{post.content}</span>
-        </div>
+        <PostCard key={post.title} post={post} />
       ))}
     </div>
   );

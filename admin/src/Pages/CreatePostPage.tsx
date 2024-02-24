@@ -85,7 +85,6 @@ export default function CreatePostPage() {
       }
     }
   }
-  console.log(posts);
 
   return (
     <Form {...form}>
