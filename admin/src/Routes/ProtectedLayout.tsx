@@ -16,7 +16,7 @@ export default function ProtectedRoutes() {
 
   return (
     <Provider store={store}>
-      <div className="relative flex bg-black text-white gap-3">
+      <div className="relative flex bg-black text-white">
         <Navbar />
         <div className="w-full p-3">
           <Outlet />
