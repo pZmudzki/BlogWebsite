@@ -1,8 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { Filter } from "lucide-react";
 
 type SearchState = {
-  input: String;
+  input: string;
   filters: String[];
 };
 
@@ -27,7 +26,7 @@ export const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    setInput(state, action: PayloadAction<String>) {
+    setInput(state, action: PayloadAction<string>) {
       state.input = action.payload;
     },
     setFilters(state, action: PayloadAction<String>) {
