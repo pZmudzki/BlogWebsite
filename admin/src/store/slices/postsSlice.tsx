@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 export type Post = {
-  id: string;
+  _id: string;
   type:
     | "Wierszem pisane"
     | "Scenariuse pisane życiem"
@@ -9,7 +9,7 @@ export type Post = {
     | "Taniec";
   title: string;
   content: string;
-  imgUrl?: string[];
+  imageUrl?: string[];
   videoUrl?: string;
   createdAt: Date;
   views: number;
@@ -31,26 +31,28 @@ export const postsSlice = createSlice({
     setPosts(state, action: PayloadAction<Post[]>) {
       const ids: String[] = [];
       state.posts.map((statePost) => {
-        ids.push(statePost.id);
+        ids.push(statePost._id);
       });
       action.payload.map((post) => {
-        if (!ids.includes(post.id)) {
+        if (!ids.includes(post._id)) {
           state.posts.push(post);
         }
       });
     },
     addPost(state, action: PayloadAction<Post>) {
-      state.posts.push(action.payload);
+      if (!state.posts.includes(action.payload)) {
+        state.posts.push(action.payload);
+      }
     },
     updatePost(state, action: PayloadAction<Post>) {
       const idx = state.posts.findIndex(
-        (post) => post.id === action.payload.id
+        (post) => post._id === action.payload._id
       );
       state.posts[idx] = action.payload;
     },
-    deletePost(state, action: PayloadAction<{ id: string }>) {
+    deletePost(state, action: PayloadAction<{ _id: string }>) {
       const idx = state.posts.findIndex(
-        (post) => post.id === action.payload.id
+        (post) => post._id === action.payload._id
       );
       state.posts.splice(idx, 1);
     },

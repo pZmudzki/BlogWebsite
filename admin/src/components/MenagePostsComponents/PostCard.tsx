@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { type Post } from "../../store/slices/postsSlice";
 import {
   Card,
@@ -13,6 +14,7 @@ type PostCardProps = {
 };
 
 export default function PostCard({ post }: PostCardProps) {
+  const navigate = useNavigate();
   function cutStringWithEllipsis(str: string, maxLength: number): string {
     if (str.length <= maxLength) {
       return str;
@@ -21,8 +23,15 @@ export default function PostCard({ post }: PostCardProps) {
     }
   }
 
+  function handleClick() {
+    navigate(`/dashboard/posts/${post._id}`);
+  }
+
   return (
-    <Card className="flex flex-col justify-between hover:scale-[1.03] hover:cursor-pointer transition-all">
+    <Card
+      onClick={handleClick}
+      className="flex flex-col justify-between hover:scale-[1.03] hover:cursor-pointer transition-all"
+    >
       <CardHeader>
         <CardTitle>{post.title}</CardTitle>
         <CardDescription className="flex items-center justify-between">

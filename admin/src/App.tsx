@@ -10,6 +10,7 @@ import CommentsPage from "./Pages/CommentsPage.tsx";
 import AnaliticsPage from "./Pages/AnaliticsPage.tsx";
 import CreatePostPage from "./Pages/CreatePostPage.tsx";
 import PostsLayout from "./Routes/PostsLayout.tsx";
+import PostPage from "./Pages/PostPage.tsx";
 
 //axios config
 axios.defaults.baseURL = "http://localhost:3000/api";
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="" element={<DashboardPage />} />
           <Route path="posts" element={<PostsLayout />}>
             <Route path="" element={<PostsPage />} />
+            <Route path=":id" element={<PostPage />} />
             <Route path="create" element={<CreatePostPage />} />
           </Route>
           <Route path="comments" element={<CommentsPage />} />

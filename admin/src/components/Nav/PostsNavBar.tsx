@@ -51,38 +51,40 @@ export default function PostsNavBar() {
 
   return (
     <div className="flex justify-between items-center">
-      <div className="flex gap-1">
-        <Input
-          className="max-w-fit"
-          placeholder="Wyszukaj post"
-          name="search"
-          onChange={handleSearch}
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">
-              <AdjustmentsHorizontalIcon
-                className="h-full"
-                aria-hidden="true"
-              />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Typ postu</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {POSSIBLE_FILTERS.map((filter) => (
-              <DropdownMenuCheckboxItem
-                key={filter}
-                checked={filters.includes(filter)}
-                onSelect={handleFilter}
-              >
-                {filter}
-              </DropdownMenuCheckboxItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-      <div className="flex gap-3 justify-end">
+      {location.pathname === "/dashboard/posts" && (
+        <div className="flex gap-1">
+          <Input
+            className="max-w-fit"
+            placeholder="Wyszukaj post"
+            name="search"
+            onChange={handleSearch}
+          />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                <AdjustmentsHorizontalIcon
+                  className="h-full"
+                  aria-hidden="true"
+                />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Typ postu</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {POSSIBLE_FILTERS.map((filter) => (
+                <DropdownMenuCheckboxItem
+                  key={filter}
+                  checked={filters.includes(filter)}
+                  onSelect={handleFilter}
+                >
+                  {filter}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      )}
+      <div className="w-full flex gap-3 justify-end">
         {postsNavLinks.map((link) => {
           return (
             <Link

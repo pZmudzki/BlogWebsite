@@ -29,7 +29,7 @@ export default function PostsContainer({ posts }: PostContainerProps) {
               .includes(searchParams.toLowerCase())
         )
         .map((post) => (
-          <PostCard key={post.title} post={post} />
+          <PostCard key={post._id} post={post} />
         ))}
     </div>
   );

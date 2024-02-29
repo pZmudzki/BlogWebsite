@@ -23,22 +23,9 @@ const addPost = async (req, res) => {
 
     const newPost = await Post.create(postContent);
 
-    const post = {
-      id: newPost._id,
-      type: newPost.type,
-      title: newPost.title,
-      content: newPost.content,
-      createdAt: newPost.createdAt,
-      archived: newPost.archived,
-      views: newPost.views,
-    };
-
-    if (newPost.imageUrl) post.imageUrl = newPost.imageUrl;
-    if (newPost.videoUrl) post.videoUrl = newPost.videoUrl;
-
     res
       .status(201)
-      .json({ message: "Pomyślnie dodano nowy post!", post: post });
+      .json({ message: "Pomyślnie dodano nowy post!", post: newPost });
   } catch (error) {
     console.log(error.message);
     res.status(409).json({ error: "Błąd w dodawaniu treści" });
@@ -77,4 +64,35 @@ const getPosts = async (req, res) => {
   }
 };
 
-module.exports = { getPost, getPosts, addPost };
+const updatePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content, type, achieved } = req.body;
+    let imagesBuffer = [];
+    let postContent = {
+      title,
+      content,
+      type,
+      achieved,
+    };
+    if (req.body.img) {
+      let images = [...req.body.img];
+      for (let i = 0; i < images.length; i++) {
+        const { secure_url } = await cloudinaryUpload(images[i]);
+        imagesBuffer.push(secure_url);
+      }
+      postContent.imageUrl = imagesBuffer;
+    }
+    if (req.body.videoUrl) postContent.videoUrl = req.body.videoUrl;
+
+    const updatedPost = await Post.findByIdAndUpdate(id, postContent, {
+      new: true,
+    });
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    console.log(error.message);
+    res.status(409).json({ error: "Błąd w aktualizacji treści" });
+  }
+};
+
+module.exports = { getPost, getPosts, addPost, updatePost };
