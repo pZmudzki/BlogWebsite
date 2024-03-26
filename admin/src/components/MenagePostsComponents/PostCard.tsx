@@ -33,7 +33,14 @@ export default function PostCard({ post }: PostCardProps) {
       className="flex flex-col justify-between hover:scale-[1.03] hover:cursor-pointer transition-all"
     >
       <CardHeader>
-        <CardTitle>{post.title}</CardTitle>
+        <CardTitle>
+          <div className="flex flex-col gap-2">
+            {post.archived ? (
+              <h2 className="text-yellow-200">Zarchiwizowany</h2>
+            ) : null}
+            <h1>{post.title}</h1>
+          </div>
+        </CardTitle>
         <CardDescription className="flex items-center justify-between">
           <span>{post.type}</span>
           <span>

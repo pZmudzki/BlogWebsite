@@ -9,6 +9,7 @@ import PostsPage from "./Pages/PostsPage.tsx";
 import CommentsPage from "./Pages/CommentsPage.tsx";
 import AnaliticsPage from "./Pages/AnaliticsPage.tsx";
 import CreatePostPage from "./Pages/CreatePostPage.tsx";
+import EditPostPage from "./Pages/EditPostPage.tsx";
 import PostsLayout from "./Routes/PostsLayout.tsx";
 import PostPage from "./Pages/PostPage.tsx";
 
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="" element={<PostsPage />} />
             <Route path=":id" element={<PostPage />} />
             <Route path="create" element={<CreatePostPage />} />
+            <Route path="edit/:id" element={<EditPostPage />} />
           </Route>
           <Route path="comments" element={<CommentsPage />} />
           <Route path="analitics" element={<AnaliticsPage />} />

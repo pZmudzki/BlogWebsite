@@ -5,6 +5,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 export default function PostPage() {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -55,6 +62,11 @@ export default function PostPage() {
 
   return (
     <div className="flex flex-col divide-y">
+      {post.archived ? (
+        <span className="text-yellow-200 text-2xl py-3 text-center">
+          Post Zarchiwizowany
+        </span>
+      ) : null}
       <div className="flex items-center justify-between py-3">
         <div className="flex gap-3">
           <h1 className="text-3xl bold">{post.title}</h1>
@@ -66,15 +78,27 @@ export default function PostPage() {
             })}
           </span>
         </div>
-        <ArchivePostButton post={post} />
+        <TooltipProvider>
+          <Tooltip delayDuration={200}>
+            <TooltipTrigger asChild>
+              <div>
+                <ArchivePostButton post={post} setPost={setPost} />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="left">
+              <p>{!post.archived ? "Zarchiwizuj post" : "Upublicznij post"}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <p className="whitespace-pre-wrap p-3">{post.content}</p>
-      {post.imageUrl || post.videoUrl ? (
+      {post.imageUrl!.length > 0 || post.videoUrl ? (
         <div className="flex flex-col gap-3 p-3">
-          <h2>Załączniki:</h2>
+          <h2 className="text-2xl">Załączniki:</h2>
           <div className="flex gap-3">
-            {post.imageUrl?.map((img) => (
+            {post.imageUrl?.map((img, idx) => (
               <img
+                key={idx}
                 className="max-h-48 object-cover"
                 src={img}
                 alt={`"${post.title}" image`}

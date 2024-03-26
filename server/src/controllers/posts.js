@@ -67,13 +67,14 @@ const getPosts = async (req, res) => {
 const updatePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, content, type, achieved } = req.body;
+    const { title, content, type, archived } = req.body;
     let imagesBuffer = [];
+    console.log(archived);
     let postContent = {
       title,
       content,
       type,
-      achieved,
+      archived,
     };
     if (req.body.img) {
       let images = [...req.body.img];
@@ -88,6 +89,7 @@ const updatePost = async (req, res) => {
     const updatedPost = await Post.findByIdAndUpdate(id, postContent, {
       new: true,
     });
+    console.log(updatedPost);
     res.status(200).json(updatedPost);
   } catch (error) {
     console.log(error.message);
