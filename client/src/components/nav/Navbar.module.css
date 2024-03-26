@@ -1,0 +1,14 @@
+.navbar {
+  position: sticky;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.homeAnchor {
+  font-size: 5.2rem;
+}
+
+.anchor {
+}
